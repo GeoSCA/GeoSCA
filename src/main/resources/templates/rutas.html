@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rutas - GeoSCA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/app.css}" rel="stylesheet">
+</head>
+<body class="routes-page">
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 users-toolbar">
+        <h2 class="users-title routes-title">Rutas</h2>
+        <div>
+            <a th:href="@{/dashboard}" class="btn btn-secondary">Dashboard</a>
+            <a th:if="${puedeAdministrar}" th:href="@{/rutas/nuevo}" class="btn btn-success btn-create users-create-link">+ Nueva ruta</a>
+        </div>
+    </div>
+        <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div class="table-responsive users-table-card">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark"><tr><th>ID</th><th>Nombre</th><th>Origen</th><th>Destino</th><th>Paradas intermedias</th><th>Distancia (km)</th><th>Cooperativa</th><th>Estado</th><th th:if="${puedeAdministrar}">Acciones</th></tr></thead>
+        <tbody>
+        <tr th:each="ruta : ${rutas}">
+            <td th:text="${ruta.idRuta}"></td><td th:text="${ruta.nombre}"></td>
+            <td th:text="${ruta.parroquiaOrigen != null ? ruta.parroquiaOrigen.nombre : ruta.origen}"></td>
+            <td th:text="${ruta.parroquiaDestino != null ? ruta.parroquiaDestino.nombre : ruta.destino}"></td>
+            <td>
+                <span th:each="parada, iter : ${ruta.paradas}">
+                    <span th:text="${parada.nombre}"></span><span th:if="${!iter.last}">, </span>
+                </span>
+                <span th:if="${ruta.paradas == null or #lists.isEmpty(ruta.paradas)}"
+                      th:text="${ruta.paradasIntermedias}"></span>
+            </td>
+            <td th:text="${ruta.distanciaKm}"></td>
+            <td th:text="${ruta.cooperativa != null ? ruta.cooperativa.nombre : ''}"></td><td><span class="status-badge" th:text="${ruta.estado}"></span></td>
+            <td th:if="${puedeAdministrar}">
+                <a th:href="@{/rutas/editar/{id}(id=${ruta.idRuta})}" class="btn btn-warning btn-sm users-edit">Editar</a>
+                <form th:action="@{/rutas/eliminar/{id}(id=${ruta.idRuta})}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger btn-sm users-delete" onclick="return confirm('¿Está seguro de que desea eliminar esta ruta?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+</body>
+</html>

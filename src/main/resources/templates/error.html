@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Error - GeoSCA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/app.css}" rel="stylesheet">
+</head>
+<body class="error-page">
+<main class="container mt-5 error-main">
+    <div class="alert alert-warning error-panel">
+        <h1 th:text="|Error ${codigo}|">Error</h1>
+        <p th:text="${mensaje}">Ocurrió un error.</p>
+        <a th:href="@{/dashboard}" class="btn btn-primary">Volver al inicio</a>
+    </div>
+</main>
+</body>
+</html>

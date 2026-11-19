@@ -1,0 +1,12 @@
+package com.cooperativa.gestioncooperativa.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.cooperativa.gestioncooperativa.entity.Permiso;
+
+public interface PermisoRepository extends JpaRepository<Permiso, Long> {
+
+    Optional<Permiso> findByNombre(String nombre);
+}

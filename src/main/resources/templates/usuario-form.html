@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Usuario</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/app.css}" rel="stylesheet">
+</head>
+
+<body class="user-form-page">
+
+<div class="container mt-5">
+
+    <header class="user-form-heading">
+        <h2>Gestión de Usuario</h2>
+    </header>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <form class="form-panel user-form-panel" th:action="@{/usuarios/guardar}"
+          th:object="${usuario}"
+          method="post">
+
+        <!-- Campo oculto para EDITAR -->
+        <input type="hidden"
+               th:field="*{idUsuario}">
+
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text"
+                   class="form-control"
+                   th:field="*{nombre}"
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Apellido</label>
+            <input type="text"
+                   class="form-control"
+                   th:field="*{apellido}"
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input type="email"
+                   class="form-control"
+                   th:field="*{correo}"
+                   required>
+        </div>
+
+        <div class="mb-3" th:if="${usuario.idUsuario != null}">
+            <label class="form-label">Usuario</label>
+            <input type="text"
+                   class="form-control"
+                   th:field="*{username}"
+                   required>
+        </div>
+
+        <div class="mb-3" th:if="${usuario.idUsuario != null}">
+            <label class="form-label">Contraseña</label>
+            <input type="password"
+                   class="form-control"
+                   th:field="*{password}"
+                   minlength="8"
+                   pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,}"
+                   th:required="${usuario.idUsuario == null}">
+            <div class="form-text" th:if="${usuario.idUsuario != null}">
+                Mínimo 8 caracteres, una letra y un número. Déjela vacía para conservar la contraseña actual.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <select class="form-select" th:field="*{rol.idRol}" required>
+                <option value="">Seleccione un rol</option>
+                <option th:each="rol : ${roles}"
+                        th:value="${rol.idRol}"
+                        th:text="${rol.nombre}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Cooperativa</label>
+            <select class="form-select" th:field="*{cooperativa.idCooperativa}">
+                <option value="">Sin cooperativa asignada</option>
+                <option th:each="cooperativa : ${cooperativas}"
+                        th:value="${cooperativa.idCooperativa}"
+                        th:text="${cooperativa.nombre}"></option>
+            </select>
+        </div>
+
+        <div class="user-form-actions">
+        <button type="submit"
+                class="btn btn-success">
+            Guardar
+        </button>
+
+        <a href="/usuarios-web"
+           class="btn btn-secondary">
+            Volver
+        </a>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GeoSCA</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/app.css}" rel="stylesheet">
+
+</head>
+
+<body class="bg-light dashboard-page">
+
+<nav class="navbar navbar-dark bg-primary dashboard-navbar">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">
+            <i class="bi bi-bus-front-fill" aria-hidden="true"></i>
+            GeoSCA - Gestión de Cooperativas
+        </span>
+        <a th:unless="${esAdminGeneral}" th:href="@{/cuenta/password}" class="btn btn-outline-light dashboard-logout">Cambiar contraseña</a>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-outline-light dashboard-logout">Cerrar sesión</button>
+        </form>
+    </div>
+</nav>
+
+<main class="container mt-5 dashboard-main">
+
+    <header class="dashboard-heading">
+    <h2 class="dashboard-title">
+        Sistema de Gestión de Cooperativas
+    </h2>
+    </header>
+
+    <div class="row g-4 dashboard-grid">
+
+        <div class="col-12 col-sm-6 col-lg-4" th:if="${permisos.contains('GESTIONAR_USUARIOS')}">
+            <div class="card shadow dashboard-card dashboard-users h-100">
+                <div class="card-body">
+                    <div class="dashboard-icon"><i class="bi bi-people" aria-hidden="true"></i></div>
+                    <h5>Usuarios</h5>
+                    <p>Administración de usuarios</p>
+                    <a href="/usuarios-web" class="btn btn-primary dashboard-action">
+                        Ingresar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4" th:if="${permisos.contains('GESTIONAR_COOPERATIVAS')}">
+            <div class="card shadow dashboard-card dashboard-coops h-100">
+                <div class="card-body">
+                    <div class="dashboard-icon"><i class="bi bi-building" aria-hidden="true"></i></div>
+                    <h5>Cooperativas</h5>
+                    <p>Gestión de cooperativas</p>
+                    <a href="/cooperativas-web" class="btn btn-primary dashboard-action">
+                        Ingresar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4" th:if="${permisos.contains('GESTIONAR_PARROQUIAS')}">
+            <div class="card shadow dashboard-card dashboard-parishes h-100">
+                <div class="card-body">
+                    <div class="dashboard-icon"><i class="bi bi-geo-alt" aria-hidden="true"></i></div>
+                    <h5>Parroquias</h5>
+                    <p>Gestión territorial</p>
+                    <a href="/parroquias-web" class="btn btn-primary dashboard-action">
+                        Ingresar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4" th:if="${permisos.contains('GESTIONAR_CONDUCTORES')}">
+            <div class="card shadow dashboard-card dashboard-drivers h-100">
+                <div class="card-body">
+                    <div class="dashboard-icon"><i class="bi bi-person-badge" aria-hidden="true"></i></div>
+                    <h5>Conductores</h5>
+                    <p>Administración de conductores</p>
+                    <a href="/conductores-web" class="btn btn-primary dashboard-action">
+                        Ingresar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4" th:if="${permisos.contains('GESTIONAR_AUTOBUSES')}">
+            <div class="card shadow dashboard-card dashboard-buses h-100">
+                <div class="card-body">
+                    <div class="dashboard-icon"><i class="bi bi-bus-front" aria-hidden="true"></i></div>
+                    <h5>Autobuses</h5>
+                    <p>Administración de autobuses</p>
+                    <a href="/autobuses-web" class="btn btn-primary dashboard-action">Ingresar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4" th:if="${permisos.contains('GESTIONAR_RUTAS')}">
+            <div class="card shadow dashboard-card dashboard-routes h-100">
+                <div class="card-body">
+                    <div class="dashboard-icon"><i class="bi bi-signpost-split" aria-hidden="true"></i></div>
+                    <h5>Rutas</h5>
+                    <p>Administración de rutas</p>
+                    <a href="/rutas-web" class="btn btn-primary dashboard-action">Ingresar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4" th:if="${permisos.contains('GESTIONAR_ROLES')}">
+            <div class="card shadow dashboard-card dashboard-roles h-100">
+                <div class="card-body">
+                    <div class="dashboard-icon"><i class="bi bi-shield-lock" aria-hidden="true"></i></div>
+                    <div class="dashboard-role-spacer" aria-hidden="true"></div>
+                    <a th:href="@{/roles-web}" class="btn btn-primary dashboard-action">Consultar roles</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

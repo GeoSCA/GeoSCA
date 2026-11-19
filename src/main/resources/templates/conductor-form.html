@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Conductor - GeoSCA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/app.css}" rel="stylesheet">
+</head>
+<body class="user-form-page driver-form-page">
+<div class="container mt-5">
+    <header class="user-form-heading driver-form-title">
+        <h2>Gestión de Conductor</h2>
+    </header>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <form class="form-panel user-form-panel driver-form-panel" th:action="@{/conductores/guardar}" th:object="${conductor}" method="post">
+        <input type="hidden" th:field="*{idConductor}">
+        <div class="mb-3 driver-field-id"><label class="form-label">Cédula</label><input class="form-control" th:field="*{cedula}" required></div>
+        <div class="mb-3 driver-field-firstname"><label class="form-label">Nombres</label><input class="form-control" th:field="*{nombres}" required></div>
+        <div class="mb-3 driver-field-lastname"><label class="form-label">Apellidos</label><input class="form-control" th:field="*{apellidos}" required></div>
+        <div class="mb-3 driver-field-license"><label class="form-label">Licencia</label><input class="form-control" th:field="*{licencia}" required></div>
+        <div class="mb-3 driver-field-expiry"><label class="form-label">Fecha de caducidad de licencia</label><input type="date" class="form-control" th:field="*{fechaCaducidadLicencia}" required></div>
+        <div class="mb-3 driver-field-phone"><label class="form-label">Teléfono</label><input class="form-control" th:field="*{telefono}" required></div>
+        <div class="mb-3 driver-field-email"><label class="form-label">Correo</label><input type="email" class="form-control" th:field="*{correo}" required></div>
+        <div class="mb-3 driver-field-cooperative" th:if="${esAdminGeneral}">
+            <label class="form-label">Cooperativa</label>
+            <select class="form-select" th:field="*{cooperativa.idCooperativa}" required>
+                <option value="">Seleccione una cooperativa</option>
+                <option th:each="cooperativa : ${cooperativas}" th:value="${cooperativa.idCooperativa}" th:text="${cooperativa.nombre}"></option>
+            </select>
+        </div>
+        <input th:unless="${esAdminGeneral}" type="hidden" th:field="*{cooperativa.idCooperativa}">
+        <div class="mb-3 driver-field-state"><label class="form-label">Estado</label><select class="form-select" th:field="*{estado}" required><option value="">Seleccione un estado</option><option value="ACTIVO">Activo</option><option value="INACTIVO">Inactivo</option></select></div>
+        <div class="user-form-actions">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a th:href="@{/conductores-web}" class="btn btn-secondary">Volver</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
